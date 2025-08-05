@@ -1,4 +1,3 @@
-console.log('--- [CARREGANDO] userRoutes.js ---');
 const express = require('express');
 const userController = require('../controllers/userController');
 const { protect, restrictTo } = require('../middlewares/authMiddleware');

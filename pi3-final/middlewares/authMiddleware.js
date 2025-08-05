@@ -1,4 +1,4 @@
-// ficheiro: pi3-final/middlewares/authMiddleware.js
+
 
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');

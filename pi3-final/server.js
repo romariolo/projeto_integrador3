@@ -20,7 +20,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+const uploadsPath = path.join(__dirname, 'uploads');
+app.use('/uploads', express.static(uploadsPath));
 
 app.get('/', (req, res) => {
     res.send('API do Marketplace de Comércio Local está rodando!');
@@ -43,7 +45,6 @@ const startServer = async () => {
     try {
         await connectDB();
         await sequelize.sync({ alter: true });
-        console.log('Todos os modelos foram sincronizados com sucesso com o banco de dados.');
 
         app.listen(PORT, () => {
             console.log(`Servidor rodando na porta ${PORT}`);

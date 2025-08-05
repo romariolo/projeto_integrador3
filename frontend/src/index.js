@@ -1,11 +1,9 @@
-// ficheiro: frontend/src/index.js
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
-import { ProductProvider } from './context/ProductContext'; // 1. Importe o ProductProvider
+import { ProductProvider } from './context/ProductContext';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/Theme';
@@ -18,7 +16,7 @@ root.render(
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <ProductProvider> {/* 2. Adicione o provider aqui */}
+          <ProductProvider>
             <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
               <ThemeProvider theme={theme}>
                 <App />
