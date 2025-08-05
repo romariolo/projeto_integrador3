@@ -1,5 +1,3 @@
-// ficheiro: frontend/src/pages/ProductDetailPage.js
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
@@ -38,7 +36,6 @@ function ProductDetailPage() {
     }, [productId]);
 
     const handleAddToCart = () => {
-        // Verifica se o utilizador está logado antes de adicionar ao carrinho
         if (!user) {
             enqueueSnackbar('Precisa de fazer login para adicionar itens ao carrinho.', { variant: 'info' });
             navigate('/login');
@@ -49,6 +46,10 @@ function ProductDetailPage() {
             addToCart(product);
             enqueueSnackbar(`${product.name} adicionado ao carrinho!`, { variant: 'success' });
         }
+    };
+
+    const handleBack = () => {
+        navigate(-1);
     };
 
     if (loading) {
@@ -74,12 +75,20 @@ function ProductDetailPage() {
                     <Box
                         component="img"
                         sx={{
-                            width: '100%',
+                            width: 300,
+                            height: 300,
                             borderRadius: 2,
                             boxShadow: 3,
+                            objectFit: 'cover',
+                            display: 'block',
+                            mx: 'auto'
                         }}
-                        src={product.imageUrl ? `http://localhost:3000${product.imageUrl}` : 'https://placehold.co/600x400?text=Sem+Imagem'}
+                        src={product.imageUrl ? `http://localhost:3000${product.imageUrl}` : 'https://placehold.co/300x300?text=Sem+Imagem'}
                         alt={product.name}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://placehold.co/300x300?text=Imagem+Indisponível';
+                        }}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -93,9 +102,14 @@ function ProductDetailPage() {
                     <Typography variant="body1" paragraph>
                         {product.description || "Este produto não tem uma descrição detalhada."}
                     </Typography>
-                    <Button variant="contained" size="large" sx={{ mt: 2 }} onClick={handleAddToCart}>
-                        Adicionar ao Carrinho
-                    </Button>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+                        <Button variant="contained" size="large" onClick={handleAddToCart}>
+                            Adicionar ao Carrinho
+                        </Button>
+                        <Button variant="contained" size="small" color="warning" onClick={handleBack}>
+                            Voltar
+                        </Button>
+                    </Box>
                 </Grid>
             </Grid>
         </Container>
