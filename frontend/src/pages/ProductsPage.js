@@ -94,7 +94,17 @@ function ProductsPage() {
                                 to={`/produtos/${id}`}
                                 sx={{ textDecoration: 'none', color: 'inherit', height: '100%' }}
                             >
-                                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                                <Card
+                                    sx={{
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        transition: 'transform 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'scale(1.05)'
+                                        }
+                                    }}
+                                >
                                     <CardMedia
                                         component="img"
                                         image={imageUrl

@@ -1,12 +1,10 @@
-// ficheiro: frontend/src/App.js
-
 import React from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom"; // Importe o useLocation
+import { Routes, Route, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { Box, CssBaseline } from '@mui/material';
 import "./styles/App.css";
 
-// Importações
+// Importações de páginas
 import Header from "./components/Header";
 import Footer from "./components/layout/Footer";
 import ProductsPage from "./pages/ProductsPage";
@@ -19,7 +17,7 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import MyOrdersPage from './pages/MyOrdersPage';
-import { Navigate } from "react-router-dom";
+import ForgotPassPage from './pages/ForgotPassPage';
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { user } = useAuth();
@@ -32,15 +30,14 @@ function ProtectedRoute({ children, allowedRoles }) {
 function App() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation(); // Hook para saber a URL atual
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  // Define em que páginas o cabeçalho e o rodapé devem aparecer
-  const showLayout = !['/login', '/register'].includes(location.pathname);
+  const showLayout = !['/login', '/register', '/esqueci-senha'].includes(location.pathname);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -52,8 +49,9 @@ function App() {
           {/* Rotas Públicas */}
           <Route path="/" element={<ProductsPage />} />
           <Route path="/produtos/:productId" element={<ProductDetailPage />} />
-          <Route path="/login" element={<LoginPage />} /> {/* Não precisa mais do onBack */}
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/esqueci-senha" element={<ForgotPassPage />} />
           <Route path="/pedido-confirmado" element={<OrderSuccessPage />} />
 
           {/* Rotas Protegidas */}
@@ -64,7 +62,7 @@ function App() {
           <Route path="/painel-vendedor" element={<ProtectedRoute allowedRoles={['vendedor', 'admin']}><SellerDashboardPage /></ProtectedRoute>} />
         </Routes>
       </Box>
-      
+
       {showLayout && <Footer />}
     </Box>
   );

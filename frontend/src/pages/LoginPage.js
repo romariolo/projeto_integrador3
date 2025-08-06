@@ -104,7 +104,7 @@ function LoginPage() {
             <Button component={Link} to="/register" size="small">
               Novo usuário
             </Button>
-            <Button size="small">
+            <Button component={Link} to="/esqueci-senha" size="small">
               Esqueci a senha
             </Button>
           </Box>
