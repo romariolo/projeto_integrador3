@@ -1,4 +1,3 @@
-// ficheiro: frontend/src/pages/CheckoutPage.js
 
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
@@ -7,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {
     Container, Typography, Box, Button, Paper, TextField,
     CircularProgress, FormControl, RadioGroup, FormControlLabel, Radio
-} from '@mui/material'; // A importação de 'FormLabel' foi removida
+} from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 function CheckoutPage() {
