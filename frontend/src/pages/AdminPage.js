@@ -4,6 +4,7 @@ import "../styles/AdminPage.css";
 import ManageProductsTab from "../components/admin/ManageProductsTab";
 import ManageSalesTab from "../components/admin/ManageSalesTab";
 import StockViewTab from "../components/admin/StockViewTab";
+import NotificationsTab from "../components/admin/NotificationsTab";
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
@@ -73,30 +74,30 @@ function AdminPage() {
       alert(error.message);
     }
   };
-  
+
   const handleCreateSale = async (saleForm) => {
-      try {
-        const response = await fetch('http://localhost:3000/api/orders', {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify({
-                productId: saleForm.productId,
-                quantity: parseInt(saleForm.quantity, 10)
-            })
-        });
-        if(!response.ok) {
-            const errData = await response.json();
-            throw new Error(errData.message || 'Erro ao registrar venda.');
-        }
-        alert('Venda registrada com sucesso!');
-        await fetchData(false);
-      } catch (error) {
-          alert(error.message);
+    try {
+      const response = await fetch('http://localhost:3000/api/orders', {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({
+          productId: saleForm.productId,
+          quantity: parseInt(saleForm.quantity, 10)
+        })
+      });
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || 'Erro ao registrar venda.');
       }
+      alert('Venda registrada com sucesso!');
+      await fetchData(false);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   if (loading) {
-      return <div className="admin-layout">Carregando painel de administração...</div>;
+    return <div className="admin-layout">Carregando painel de administração...</div>;
   }
 
   const renderContent = () => {
@@ -115,6 +116,8 @@ function AdminPage() {
                   sales={sales} 
                   onSaleSubmit={handleCreateSale} 
                 />;
+      case "notificacoes":
+        return <NotificationsTab />;
       default:
         return null;
     }
@@ -128,12 +131,16 @@ function AdminPage() {
           <button className={`menu-item ${activeMenu === "produtos" ? "active" : ""}`} onClick={() => setActiveMenu("produtos")}>Produtos</button>
           <button className={`menu-item ${activeMenu === "estoque" ? "active" : ""}`} onClick={() => setActiveMenu("estoque")}>Estoque</button>
           <button className={`menu-item ${activeMenu === "vendas" ? "active" : ""}`} onClick={() => setActiveMenu("vendas")}>Vendas</button>
+          <button className={`menu-item ${activeMenu === "notificacoes" ? "active" : ""}`} onClick={() => setActiveMenu("notificacoes")}>Notificações</button>
         </nav>
       </div>
       <div className="admin-main">
         <h2>Painel do Administrador</h2>
-        {renderContent()}
-      </div>
+      <div className="tab-content">
+    {renderContent()}
+  </div>
+</div>
+
     </div>
   );
 }
